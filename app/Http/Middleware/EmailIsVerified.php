@@ -22,9 +22,9 @@ class EmailIsVerified
     {
 
         $user = User::where('email', $request['email'])->first();
-        if ($user->status == 0) {
+        if ($user && $user->status == 0) {
             // Mail::to($request->$request['email'])->send(new EmailVerification($user));
-            return response()->json(['message' => 'email not Verified'],401);
+            return response()->json(['message' => 'e-mail not verified'],401);
         }
         return $next($request);
     }

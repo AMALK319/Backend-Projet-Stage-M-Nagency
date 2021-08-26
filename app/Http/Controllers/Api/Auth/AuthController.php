@@ -7,7 +7,7 @@ use App\Http\Requests\Auth\LoginRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 
-class AuthController1 extends Controller
+class AuthController extends Controller
 {
 
     public function login1(LoginRequest $request)
@@ -18,13 +18,16 @@ class AuthController1 extends Controller
             $userResponse = User::with('userable')->where('id', auth()->id())->first();
             return response()->json([
                 'token' => $accessToken,
-                'space_name' => auth()->user()->userable_type == Candidate::class ? 'candidate' :'enterprise',
+                'space_name' => auth()->user()->userable_type == 'App\Models\Candidate' ? 'candidate' :'enterprise',
                 'user' => $userResponse,
             ], 200);
 
 
         } else {
-            return response()->json(['error' => __('LoginFailed')], 201);
+            return response()->json([
+                'error' => __('LoginFailed'),
+                'message' => 'failed',
+        ], 401);
         }
     }
 }

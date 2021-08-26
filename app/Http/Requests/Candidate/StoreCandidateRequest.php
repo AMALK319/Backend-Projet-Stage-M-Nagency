@@ -29,10 +29,10 @@ class StoreCandidateRequest extends FormRequest
             'email'                 =>  'required|email|unique:users',
             'password'              =>  'required|confirmed',
             'password_confirmation' => 'required|same:password',
-            'gender'                =>  'required|in:Mr,Mme',
+           /*  'gender'                =>  'required|in:Mr,Mme', */
             'mobile_number'          =>  'required|string',
-            'birth_place'            =>  'string',
-            'date_of_birth'           =>  'date',
+            /* 'birth_place'            =>  'string',
+            'date_of_birth'           =>  'date', */
             'nationality'           =>  'required|string',
            /*  'speciality'            =>  'required|in:Développment full-stack , Réseaux et Télecommunications , Cloud ' */
 

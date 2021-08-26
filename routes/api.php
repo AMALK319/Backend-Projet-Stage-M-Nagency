@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\Candidate\CandidateController;
-use App\Http\Controllers\Api\Auth\AuthController1;
+use App\Http\Controllers\Api\Auth\AuthController;
 use App\Http\Controllers\Api\Company\CompanyRepresentativeController;
 use App\Http\Controllers\Api\Auth\EmailVerificationController;
 use App\Http\Controllers\Api\Candidate\CvEducationController;
@@ -29,7 +29,7 @@ Route::get('/info', [CompanyRepresentativeController::class, 'test']);
 Route::post('/candidate-register', [CandidateController::class, 'store'])->name('candidate.store');
 Route::post('/company-representative-login', [CompanyRepresentativeController::class, 'login'])->name('candidate.login');
 Route::post('/company-representative-register', [CompanyRepresentativeController::class, 'store']);
-Route::post('/user-login1', [AuthController1::class ,'login1'])->middleware('is_verified');
+Route::post('/user-login1', [AuthController::class ,'login1'])->middleware('is_verified');
 Route::post('/email_verification/{token}', [EmailVerificationController::class , 'verify']);
 
 
