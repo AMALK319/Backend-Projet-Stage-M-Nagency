@@ -16,6 +16,7 @@ class Degree extends Model
         'degree_start_date' ,
         'degree_end_date' ,
         'degree_description' ,
+        'candidate_id',
     ];
 
     public function candidate()

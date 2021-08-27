@@ -20,10 +20,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-/* Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-}); */
-
 Route::get('/info', [CompanyRepresentativeController::class, 'test']);
 
 Route::post('/candidate-register', [CandidateController::class, 'store'])->name('candidate.store');
@@ -35,12 +31,18 @@ Route::post('/email_verification/{token}', [EmailVerificationController::class ,
 
 
 
-Route::post('/store-cv', [CvController::class ,'store']);
+
 // Route::post('/create-cv-step3', [CvWorkExperienceController::class ,'store']);
 // Route::post('/create-cv-step4', [CvSkillsController::class ,'store']);
+/* Route::post('/store-cv', [CvController::class ,'store'])->middleware('auth:api'); */
 
+Route::prefix('candidate')->group(function () {
 
+    Route::middleware('auth:api')->group(function () {
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+        Route::post('/store-cv', [CvController::class ,'store']);
+
+    });
+
 });
+

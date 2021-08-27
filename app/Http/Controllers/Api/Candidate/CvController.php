@@ -12,6 +12,7 @@ use App\Models\Motivation;
 use App\Models\Quality;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 
 class CvController extends Controller
@@ -50,6 +51,7 @@ class CvController extends Controller
 
             $degrees = collect($request->degrees);
 
+            $candidate = Auth::user();
 
             foreach ( $degrees as $item){
                 $newDegree = Degree::create([
@@ -63,7 +65,7 @@ class CvController extends Controller
                 ]);
             }
 
-         /*    $projects = collect($request->projects);
+          /*   $projects = collect($request->projects);
             foreach ( $projects as $item){
                 $newAcademicProject = AcademicProject::create([
                     'project_title' => $item->project_title,
