@@ -15,6 +15,7 @@ class AcademicProject extends Model
         'master_project' ,
         'project_start_date' ,
         'project_end_date' ,
+        'candidate_id',
     ];
 
     public function candidate()

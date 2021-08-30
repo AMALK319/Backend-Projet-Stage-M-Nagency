@@ -18,6 +18,7 @@ class ProfessionalExperience extends Model
         'experience_start_date' ,
         'experience_end_date' ,
         'experience_description' ,
+        'candidate_id',
 
     ];
 

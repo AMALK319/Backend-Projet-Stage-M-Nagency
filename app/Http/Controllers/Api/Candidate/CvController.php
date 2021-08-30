@@ -2,18 +2,17 @@
 
 namespace App\Http\Controllers\Api\Candidate;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\Candidate\StoreCvRequest;
 use App\Models\AcademicProject;
 use App\Models\Candidate;
-use App\Models\Degree;
 use App\Models\Competence;
-use App\Models\Language ;
-use App\Models\Motivation;
+use App\Models\Degree;
+use App\Models\Language;
 use App\Models\Quality;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\DB;
 
 class CvController extends Controller
 {
@@ -53,7 +52,7 @@ class CvController extends Controller
 
             $candidate = Auth::user();
 
-            foreach ( $degrees as $item){
+            foreach ($degrees as $item) {
                 $newDegree = Degree::create([
                     'degree_title' => $item['degree_title'],
                     'organism' => $item['organism'],
@@ -65,71 +64,84 @@ class CvController extends Controller
                 ]);
             }
 
-          /*   $projects = collect($request->projects);
-            foreach ( $projects as $item){
+            $projects = collect($request->projects);
+            foreach ($projects as $item) {
                 $newAcademicProject = AcademicProject::create([
-                    'project_title' => $item->project_title,
-                    'project_description' => $item->project_description,
-                    'master_project' => $item->master_project,
-                    'project_start_date' => $item->project_start_date,
-                    'project_end_date' => $item->project_end_date,
+                    'project_title' => $item['project_title'],
+                    'project_description' => $item['project_description'],
+                    'master_project' => $item['master_project'],
+                    'project_start_date' => $item['project_start_date'],
+                    'project_end_date' => $item['project_end_date'],
                     'candidate_id' => $candidate->id,
                 ]);
-            } */
-/*
+            }
+
+            /*
             $experiences = collect($request->experiences);
             foreach($experiences as $item){
-                $newProfessionalExperience = ProfessionalExperience::create([
-                    'experience_title' => $item->experience_title,
-                    'enterprise_name' => $item->enterprise_name,
-                    'enterprise_city' => $item->enterprise_city,
-                    'enterprise_address' => $item->enterprise_address,
-                    'experience_start_date' => $item->experience_start_date,
-                    'experience_end_date' => $item->experience_end_date,
-                    'experience_description' => $item->experience_description,
+            $newProfessionalExperience = ProfessionalExperience::create([
+            'experience_title' => $item->experience_title,
+            'enterprise_name' => $item->enterprise_name,
+            'enterprise_city' => $item->enterprise_city,
+            'enterprise_address' => $item->enterprise_address,
+            'experience_start_date' => $item->experience_start_date,
+            'experience_end_date' => $item->experience_end_date,
+            'experience_description' => $item->experience_description,
 
-                ]);
+            ]);
             }
 
             $certifications = collect($request->certifications);
             foreach($certifications as $item){
             $newCertification = Certification::create([
-                'certification_name' => $item->certification_name,
-                'issuing_agency' => $item->issuing_agency,
-                'issue_date' => $item->issue_date,
-                'expiration_date' => $item->expiration_date,
-                'degree_id' => $item->degree_id,
-                'degree_url' => $item->degree_url,
+            'certification_name' => $item->certification_name,
+            'issuing_agency' => $item->issuing_agency,
+            'issue_date' => $item->issue_date,
+            'expiration_date' => $item->expiration_date,
+            'degree_id' => $item->degree_id,
+            'degree_url' => $item->degree_url,
 
             ]);
-           } */
-/*
-            $newCompetence = Competence::create([
-                'competence' => $request->competence,
-                'competence_description' => $request->competence_description,
-                'candidate_id' => $candidate->id,
-            ]);
+            } */
 
-            $newLanguage = Language::create([
-                'language' => $request->language,
-                'candidate_id' => $candidate->id,
-            ]);
+            $competences = collect($request->competences);
 
-            $newMotivation = Motivation::create([
-                'motivation' => $request->motivation,
-                'candidate_id' => $candidate->id,
-            ]);
+            foreach ($competences as $item) {
+                $newCompetence = Competence::create([
+                    'competence' => $item['competence'],
+                    'competence_description' => $item['competence_description'],
+                    'candidate_id' => $candidate->id,
+                ]);
+            }
 
-            $newQuality = Quality::create([
-                'quality' => $request->quality,
-                'candidate_id' => $candidate->id,
-            ]);
- */
+            $languages = collect($request->languages);
+            foreach ($languages as $item) {
+                $newLanguage = Language::create([
+                    'language' => $item['language'],
+                    'candidate_id' => $candidate->id,
+                ]);
+            }
 
+/* $motivations = collect($request->motivations);
+foreach($motivations as $item){
+$newMotivation = Motivation::create([
+'motivation' => $request->motivation,
+'candidate_id' => $candidate->id,
+]);
+
+} */
+            $qualities = collect($request->qualities);
+            foreach ($qualities as $item) {
+                $newQuality = Quality::create([
+                    'quality' => $item['quality'],
+                    'candidate_id' => $candidate->id,
+                ]);
+
+            }
 
             DB::commit();
             return response()->json([
-                'degrees' =>  $request->degrees ,
+                'message' => 'cv created',
 
             ], 201);
         } catch (\Throwable $exception) {

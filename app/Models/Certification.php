@@ -17,6 +17,7 @@ class Certification extends Model
         'expiration_date' ,
         'degree_id' ,
         'degree_url' ,
+        'candidate_id',
     ];
 
 

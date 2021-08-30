@@ -12,6 +12,7 @@ class Competence extends Model
     protected $fillable = [
         'competence',
         'competence_description',
+        'candidate_id', 
     ];
 
     public function candidate()

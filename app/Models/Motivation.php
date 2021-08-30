@@ -11,6 +11,8 @@ class Motivation extends Model
 
     protected $fillable = [
         'motivation',
+
+        'candidate_id',
     ];
 
     public function candidate()

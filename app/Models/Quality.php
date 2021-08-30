@@ -11,6 +11,7 @@ class Quality extends Model
 
     protected $fillable = [
         'quality',
+        'candidate_id',
     ];
 
     public function candidate()
