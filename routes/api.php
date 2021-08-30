@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\Candidate\CandidateController;
+use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\Auth\AuthController;
 use App\Http\Controllers\Api\Company\CompanyRepresentativeController;
 use App\Http\Controllers\Api\Auth\EmailVerificationController;
@@ -41,6 +42,18 @@ Route::prefix('candidate')->group(function () {
     Route::middleware('auth:api')->group(function () {
 
         Route::post('/store-cv', [CvController::class ,'store']);
+        Route::get('/get-candidate', [CandidateController::class ,'show']);
+
+    });
+
+});
+
+Route::prefix('enterprise')->group(function () {
+
+    Route::middleware('auth:api')->group(function () {
+        Route::get('/get-categories', [CategoryController::class ,'index']);
+        Route::get('/get-candidates', [CandidateController::class ,'index']);
+        Route::get('/get-candidate/{token}', [CandidateController::class ,'showCandidate']);
 
     });
 

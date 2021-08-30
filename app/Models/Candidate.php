@@ -17,6 +17,7 @@ class Candidate extends Model
         'birth_place',
         'date_of_birth',
         'nationality',
+        'token',
     ];
 
     public function user()

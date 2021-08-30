@@ -10,6 +10,7 @@ use App\Models\Competence;
 use App\Models\Degree;
 use App\Models\Language;
 use App\Models\Quality;
+use App\Models\Motivation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -65,7 +66,7 @@ class CvController extends Controller
             }
 
             $projects = collect($request->projects);
-            foreach ($projects as $item) {
+            foreach ( $projects as $item){
                 $newAcademicProject = AcademicProject::create([
                     'project_title' => $item['project_title'],
                     'project_description' => $item['project_description'],
@@ -75,8 +76,7 @@ class CvController extends Controller
                     'candidate_id' => $candidate->id,
                 ]);
             }
-
-            /*
+/*
             $experiences = collect($request->experiences);
             foreach($experiences as $item){
             $newProfessionalExperience = ProfessionalExperience::create([
@@ -102,42 +102,38 @@ class CvController extends Controller
             'degree_url' => $item->degree_url,
 
             ]);
-            } */
+           } */
+           $competences = collect($request->competences);
+           foreach ( $competences as $item){
+               $newCompetence = Competence::create([
+                'competence' => $item->competence,
+                'competence_description' => $item->competence_description,
+                'candidate_id' => $candidate->id,
+               ]);
+           }
 
-            $competences = collect($request->competences);
+         
 
-            foreach ($competences as $item) {
-                $newCompetence = Competence::create([
-                    'competence' => $item['competence'],
-                    'competence_description' => $item['competence_description'],
-                    'candidate_id' => $candidate->id,
-                ]);
-            }
+        $languages = collect($request->languages);
+        foreach($languages as $item){
+            $newLanguage = Language::create([
+                'language' => $item->language,
+                'candidate_id' => $candidate->id,
+            ]);
+        }
 
-            $languages = collect($request->languages);
-            foreach ($languages as $item) {
-                $newLanguage = Language::create([
-                    'language' => $item['language'],
-                    'candidate_id' => $candidate->id,
-                ]);
-            }
 
-/* $motivations = collect($request->motivations);
-foreach($motivations as $item){
-$newMotivation = Motivation::create([
-'motivation' => $request->motivation,
-'candidate_id' => $candidate->id,
-]);
-
-} */
-            $qualities = collect($request->qualities);
-            foreach ($qualities as $item) {
-                $newQuality = Quality::create([
-                    'quality' => $item['quality'],
-                    'candidate_id' => $candidate->id,
-                ]);
-
-            }
+        $qualities = collect($request->qualities);
+        foreach($qualities as $item){
+            $newQuality = Quality::create([
+                'quality' => $item->quality,
+                'candidate_id' => $candidate->id,
+            ]);
+        }
+            $newMotivation = Motivation::create([
+                'motivation' => $request->motivation,
+                'candidate_id' => $candidate->id,
+            ]);
 
             DB::commit();
             return response()->json([
