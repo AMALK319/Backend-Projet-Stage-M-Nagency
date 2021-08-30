@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\EmailVerification;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Auth;
 
 class CandidateController extends Controller
 {
@@ -21,7 +22,23 @@ class CandidateController extends Controller
      */
     public function index()
     {
-        //
+
+        try {
+            $candidates = Candidate::all();
+           
+            foreach( $candidates as $candidate){
+                $user=User::where('userable_id' , $candidate->id)->first();
+                $users->push($user);
+            }
+            return response()->json([
+                'candidates' => $candidates,
+                'users' => $users,
+            ],200);
+
+        } catch (\Throwable $exception) {
+
+            return $exception->getMessage();
+        }
     }
 
     /**
@@ -80,9 +97,34 @@ class CandidateController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Candidate $candidate , User $user)
     {
-        //
+        try {
+            $current = Auth::user();
+            $candidate = Candidate::where('id' , $current->userable_id)->first();
+            return response()->json([
+                'candidate' => $candidate,
+                'email' => $current->email,
+            ],200);
+
+        } catch (\Throwable $exception) {
+
+            return $exception->getMessage();
+        }
+    }
+
+    public function showCandidate($token){
+
+        try {
+            $candidate = User::where('token', $token)->first();
+            return response()->json([
+                'candidate' => $candidate,
+            ],200);
+
+        } catch (\Throwable $exception) {
+
+            return $exception->getMessage();
+        }
     }
 
     /**

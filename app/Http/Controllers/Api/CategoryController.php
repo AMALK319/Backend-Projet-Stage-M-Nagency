@@ -15,7 +15,18 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $categories = Category::all();
+
+        try {
+            $categories = Category::all();
+            return response()->json([
+                'categories' => $categories,
+
+            ],200);
+
+        } catch (\Throwable $exception) {
+
+            return $exception->getMessage();
+        }
     }
 
     /**
