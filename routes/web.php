@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\Api\Candidate\GetCvController;
 use App\Mail\EmailVerification;
 use App\Models\Candidate;
 use App\Models\CompanyRepresentative;
@@ -21,6 +22,13 @@ use Illuminate\Support\Facades\Route;
 Route::get('/email-verification', function () {
     return view('email_verification');
 });
+/* Route::get('/cv', function () {
+    return view('cv');
+});
+ */
+
+Route::get('/cv', [GetCvController::class ,'getCvPdf']);
+
 
 /* Route::get('/email-test', function () {
     Mail::to('amalkalim@gmail.com')->send(new EmailVerification);

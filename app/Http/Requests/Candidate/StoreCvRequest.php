@@ -31,8 +31,8 @@ class StoreCvRequest extends FormRequest
             'degrees.*.degree_title' => 'required|string',
             'degrees.*.organism' => 'required|string',
             'degrees.*.organism_city' => 'string',
-            'degrees.*.degree_start_date' => 'required|date',
-            'degrees.*.degree_end_date' => 'required|date',
+            'degrees.*.degree_start_date' => 'required|date|before:degrees.*.degree_end_date',
+            'degrees.*.degree_end_date' => 'required|date|after:degrees.*.degree_start_date' ,
             'degrees.*.degree_description' => 'string',
     /* Academic Projects */
             'projects' => 'array|min:1',
@@ -59,17 +59,17 @@ class StoreCvRequest extends FormRequest
             'certifications.*.degree_id' => 'required|string',
             'certifications.*.degree_url' => 'required|string', */
      /* Competences */
-            'competences' => 'required|array|min:1',
+            'competences' => 'array|min:1',
             'competences.*.competence' => 'required|string',
             'competences.*.competence_description' => 'string',
      /* Languages */
-            'languages' => 'required|array|min:1',
+            'languages' => 'array|min:1',
             'languages.*.language' => 'required|string',
      /* Motivation */
 
             'motivation' => 'required|string',
    /*   Qualities */
-            'qualities' => 'required|array|min:1',
+            'qualities' => 'array|min:1',
             'qualities.*.quality' => 'required|string',
    /*Coordonnées*/
            /*  'last_name'              =>  'required|string',
@@ -80,7 +80,8 @@ class StoreCvRequest extends FormRequest
             'birth_place'            =>  'string',
             'date_of_birth'           =>  'date',
             'nationality'           =>  'required|string',
-            'speciality'            =>  'required'
+            'speciality'            =>  'required',
         ];
     }
+
 }

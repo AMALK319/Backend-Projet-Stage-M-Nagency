@@ -49,10 +49,9 @@ class CvController extends Controller
 
             DB::beginTransaction();
 
-            $degrees = collect($request->degrees);
-
             $candidate = Auth::user();
 
+            $degrees = collect($request->degrees);
             foreach ($degrees as $item) {
                 $newDegree = Degree::create([
                     'degree_title' => $item['degree_title'],
@@ -106,18 +105,18 @@ class CvController extends Controller
            $competences = collect($request->competences);
            foreach ( $competences as $item){
                $newCompetence = Competence::create([
-                'competence' => $item->competence,
-                'competence_description' => $item->competence_description,
+                'competence' => $item['competence'],
+                'competence_description' => $item['competence_description'],
                 'candidate_id' => $candidate->id,
                ]);
            }
 
-         
+
 
         $languages = collect($request->languages);
         foreach($languages as $item){
             $newLanguage = Language::create([
-                'language' => $item->language,
+                'language' => $item['language'],
                 'candidate_id' => $candidate->id,
             ]);
         }
@@ -126,7 +125,7 @@ class CvController extends Controller
         $qualities = collect($request->qualities);
         foreach($qualities as $item){
             $newQuality = Quality::create([
-                'quality' => $item->quality,
+                'quality' => $item['quality'],
                 'candidate_id' => $candidate->id,
             ]);
         }

@@ -6,6 +6,10 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Candidate\StoreCandidateRequest;
 use App\Models\Candidate;
 use App\Models\Degree;
+use App\Models\AcademicProject;
+use App\Models\Competence;
+use App\Models\Language;
+use App\Models\Quality;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -26,14 +30,14 @@ class CandidateController extends Controller
 
         try {
             $candidates = Candidate::all();
-           
+
             foreach( $candidates as $candidate){
                 $user=User::where('userable_id' , $candidate->id)->first();
                 $candidate->token = $user->token;
             }
             return response()->json([
                 'candidates' => $candidates,
-                
+
             ],200);
 
         } catch (\Throwable $exception) {
@@ -119,10 +123,17 @@ class CandidateController extends Controller
         try {
             $user = User::where('token', $token)->first();
             $candidate = Candidate::where('id' , $user->userable_id)->first();
-            $degrees = Degree::where('candidate_id' , $candidate->id)->all();
+            $degrees = Degree::where('candidate_id' , $candidate->id)->get();
+            $projects = AcademicProject::where('candidate_id' , $candidate->id)->get();
+            $competences = Competence::where('candidate_id' , $candidate->id)->get();
+            $languages = Language::where('candidate_id' , $candidate->id)->get();
+            $qualities = Quality::where('candidate_id' , $candidate->id)->get();
             return response()->json([
                 'candidate' => $candidate,
                 'degrees' => $degrees,
+                'competences' => $competences,
+                'languages' => $languages,
+                'qualities' => $qualities,
             ],200);
 
         } catch (\Throwable $exception) {
