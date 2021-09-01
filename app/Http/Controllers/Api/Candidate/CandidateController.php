@@ -109,7 +109,7 @@ class CandidateController extends Controller
             $candidate = Candidate::where('id' , $current->userable_id)->first();
             return response()->json([
                 'candidate' => $candidate,
-                'email' => $current->email,
+                
             ],200);
 
         } catch (\Throwable $exception) {

@@ -17,10 +17,12 @@ class CreateCandidatesTable extends Migration
             $table->id();
             $table->string('first_name');
             $table->string('last_name');
+            $table->string('email')->nullable();
             $table->enum('gender', ['Mr', 'Mme'])->nullable();
             $table->string('mobile_number')->nullable();
             $table->date('date_of_birth')->nullable();
-            $table->string('birth_place')->nullable();
+            $table->string('address')->nullable();
+            $table->string('profile')->nullable();
             $table->string('nationality')->nullable();
             $table->timestamps();
         });

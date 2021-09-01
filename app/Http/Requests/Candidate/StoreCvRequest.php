@@ -33,12 +33,12 @@ class StoreCvRequest extends FormRequest
             'degrees.*.organism_city' => 'string',
             'degrees.*.degree_start_date' => 'required|date|before:degrees.*.degree_end_date',
             'degrees.*.degree_end_date' => 'required|date|after:degrees.*.degree_start_date' ,
-            'degrees.*.degree_description' => 'string',
+            
     /* Academic Projects */
             'projects' => 'array|min:1',
             'projects.*.project_title' => 'required|string',
             'projects.*.project_description' => 'string',
-            'projects.*.master_project' => 'string',
+           
             'projects.*.project_start_date' => 'required|date',
             'projects.*.project_end_date' => 'required|date',
    /*   Professional Experience */
@@ -72,15 +72,17 @@ class StoreCvRequest extends FormRequest
             'qualities' => 'array|min:1',
             'qualities.*.quality' => 'required|string',
    /*Coordonnées*/
-           /*  'last_name'              =>  'required|string',
+            'last_name'              =>  'required|string',
             'first_name'             =>  'required|string',
-            'email'                 =>  'required|email|unique:users', */
+            'email'                 =>  'required|email',
             'gender'                =>  'required|in:Mr,Mme',
-           /*  'mobile_number'          =>  'required|string', */
-            'birth_place'            =>  'string',
+            'mobile_number'          =>  'required|string',
+            'address'            =>  'string',
             'date_of_birth'           =>  'date',
             'nationality'           =>  'required|string',
             'speciality'            =>  'required',
+            'speciality'            =>  'string',
+            
         ];
     }
 

@@ -113,24 +113,42 @@ class CvController extends Controller
 
 
 
-        $languages = collect($request->languages);
-        foreach($languages as $item){
-            $newLanguage = Language::create([
-                'language' => $item['language'],
-                'candidate_id' => $candidate->id,
-            ]);
-        }
+            $languages = collect($request->languages);
+            foreach($languages as $item){
+                $newLanguage = Language::create([
+                    'language' => $item['language'],
+                    'candidate_id' => $candidate->id,
+                ]);
+            }
 
 
-        $qualities = collect($request->qualities);
-        foreach($qualities as $item){
-            $newQuality = Quality::create([
-                'quality' => $item['quality'],
-                'candidate_id' => $candidate->id,
-            ]);
-        }
+            $qualities = collect($request->qualities);
+            foreach($qualities as $item){
+                $newQuality = Quality::create([
+                    'quality' => $item['quality'],
+                    'candidate_id' => $candidate->id,
+                ]);
+            }
             $newMotivation = Motivation::create([
                 'motivation' => $request->motivation,
+                'candidate_id' => $candidate->id,
+            ]);
+
+             $candidate  = Candidate::update([
+                'last_name'              => $request->last_name  ,
+                'first_name'             => $request->first_name  ,
+                'email'                 => $request->email  ,
+                'gender'                => $request->gender  ,
+                'mobile_number'          =>  $request->mobile_number ,
+                'address'            => $request->address  ,
+                'date_of_birth'           => $request->date_of_birth  ,
+                'nationality'           => $request->nationality  ,
+                'profile'            => $request->profile  ,
+                'candidate_id' => $candidate->id,
+            ]);
+
+            $newCategoryCandidate = CategoryCandidate::create([
+                'category_id' => $request->speciality,
                 'candidate_id' => $candidate->id,
             ]);
 
