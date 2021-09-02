@@ -42,6 +42,9 @@ Route::prefix('candidate')->group(function () {
     Route::middleware('auth:api')->group(function () {
 
         Route::post('/store-cv', [CvController::class ,'store']);
+        Route::get('/show-cv', [CvController::class ,'show']);
+        Route::post('/update-cv', [CvController::class ,'update']);
+        Route::delete('/delete-cv', [CvController::class ,'destroy']);
         Route::get('/get-candidate', [CandidateController::class ,'show']);
 
     });
