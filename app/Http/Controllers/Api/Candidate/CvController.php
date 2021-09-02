@@ -11,6 +11,7 @@ use App\Models\Degree;
 use App\Models\Language;
 use App\Models\Quality;
 use App\Models\Motivation;
+use App\Models\CategoryCandidate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -133,8 +134,7 @@ class CvController extends Controller
                 'motivation' => $request->motivation,
                 'candidate_id' => $candidate->id,
             ]);
-
-             $candidate  = Candidate::update([
+            DB::table('candidates')->where('id',  $candidate->id )->update([
                 'last_name'              => $request->last_name  ,
                 'first_name'             => $request->first_name  ,
                 'email'                 => $request->email  ,
@@ -144,7 +144,7 @@ class CvController extends Controller
                 'date_of_birth'           => $request->date_of_birth  ,
                 'nationality'           => $request->nationality  ,
                 'profile'            => $request->profile  ,
-                'candidate_id' => $candidate->id,
+                
             ]);
 
             $newCategoryCandidate = CategoryCandidate::create([
@@ -154,7 +154,8 @@ class CvController extends Controller
 
             DB::commit();
             return response()->json([
-                'message' => 'cv created',
+                'candidate' => $candidate,
+                'message' => 'cv created and candidate updated successfully',
 
             ], 201);
         } catch (\Throwable $exception) {
@@ -171,7 +172,24 @@ class CvController extends Controller
      */
     public function show($id)
     {
-        //
+        $candidate = Auth::user();
+        $degrees = Degree::where('candidate_id' , $candidate->id)->get();
+        $projects = AcademicProject::where('candidate_id' , $candidate->id)->get();
+        $competences = Competence::where('candidate_id' , $candidate->id)->get();
+        $languages = Language::where('candidate_id' , $candidate->id)->get();
+        $qualities = Quality::where('candidate_id' , $candidate->id)->get();
+        return response()->json([
+            'candidate' => $candidate,
+            'degrees' => $degrees,
+            'competences' => $competences,
+            'languages' => $languages,
+            'qualities' => $qualities,
+        ],200);
+
+    } catch (\Throwable $exception) {
+
+        return $exception->getMessage();
+    }
     }
 
     /**
