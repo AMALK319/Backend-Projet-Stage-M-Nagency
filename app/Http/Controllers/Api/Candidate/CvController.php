@@ -133,13 +133,13 @@ class CvController extends Controller
                 ]);
             }
 
-            $specialities = collect($request->specialities);
+            /* $specialities = collect($request->specialities);
             foreach($specialities as $item){
             $newCategoryCandidate = CategoryCandidate::create([
                 'category_id' => $item['speciality'],
                 'candidate_id' => $candidate->id,
             ]);
-            }
+            } */
             $newMotivation = Motivation::create([
                 'motivation' => $request->motivation,
                 'candidate_id' => $candidate->id,
@@ -190,7 +190,7 @@ class CvController extends Controller
         $competences = Competence::where('candidate_id' , $candidate->id)->get();
         $languages = Language::where('candidate_id' , $candidate->id)->get();
         $qualities = Quality::where('candidate_id' , $candidate->id)->get();
-        $specialities = CategoryCandidate::where('candidate_id' , $candidate->id)->get();
+       /*  $specialities = CategoryCandidate::where('candidate_id' , $candidate->id)->get(); */
         $motivation = Motivation::where('candidate_id' , $candidate->id)->first();
         return response()->json([
             'candidate' => $candidate,
@@ -199,7 +199,7 @@ class CvController extends Controller
             'competences' => $competences,
             'languages' => $languages,
             'qualities' => $qualities,
-            'specialities' => $specialities,
+           /*  'specialities' => $specialities, */
             'motivation' => $motivation,
         ],200);
       } catch (\Throwable $exception) {
@@ -238,6 +238,7 @@ class CvController extends Controller
 
             $degrees = collect($request->degrees);
             foreach ($degrees as $item) {
+              
                 $Degree = Degree::where('id' , $item['id'] )->update([
                     'degree_title' => $item['degree_title'],
                     'organism' => $item['organism'],
@@ -298,7 +299,7 @@ class CvController extends Controller
 
 
 
-            $languages = collect($request->languages);
+          $languages = collect($request->languages);
             foreach($languages as $item){
                 $Language = Language::where('id' , $item['id'] )->update([
                     'language' => $item['language'],
@@ -307,18 +308,18 @@ class CvController extends Controller
             }
 
 
-            $qualities = collect($request->qualities);
+              $qualities = collect($request->qualities);
             foreach($qualities as $item){
                 $Quality = Quality::where('id' , $item['id'] )->update([
                     'quality' => $item['quality'],
                     'candidate_id' => $candidate->id,
                 ]);
             }
-            $Motivation = Motivation::where('candidate_id' , $candidate->id )->update([
+            $motivation = Motivation::where('candidate_id' , $candidate->id )->update([
                 'motivation' => $request->motivation,
                 'candidate_id' => $candidate->id,
             ]);
-            DB::table('candidates')->where('id',  $candidate->id )->update([
+           $candidate->update([
                 'last_name'              => $request->last_name  ,
                 'first_name'             => $request->first_name  ,
                 'email'                 => $request->email  ,
@@ -340,12 +341,13 @@ class CvController extends Controller
             return response()->json([
                 'candidate' => $candidate,
                 'degrees' => $degrees,
-                'projects' => $projects,
-                'competences' => $competences,
-                'languages' => $languages,
-                'qualities' => $qualities,
-                'speciality' => $speciality,
-                'message' => 'cv created and candidate updated successfully',
+                 'projects' => $projects,
+              'competences' => $competences,
+                 'languages' => $languages,
+               'qualities' => $qualities, 
+               'motivation' => $motivation,
+               /*  'speciality' => $speciality, */
+                'message' => 'cv  updated successfully',
 
             ], 201);
         } catch (\Throwable $exception) {
@@ -395,7 +397,7 @@ class CvController extends Controller
                 'competences' => $competences,
                 'languages' => $languages,
                 'qualities' => $qualities,
-                'speciality' => $speciality,
+              /*   'speciality' => $speciality, */
             ],200);
           } catch (\Throwable $exception) {
             DB::rollBack();
