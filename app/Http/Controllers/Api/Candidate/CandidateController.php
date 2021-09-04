@@ -10,6 +10,7 @@ use App\Models\AcademicProject;
 use App\Models\Competence;
 use App\Models\Language;
 use App\Models\Quality;
+use App\Models\CategoryCandidate;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -34,9 +35,11 @@ class CandidateController extends Controller
             foreach( $candidates as $candidate){
                 $user=User::where('userable_id' , $candidate->id)->first();
                 $candidate->token = $user->token;
+                $candidate->specialities = CategoryCandidate::where('candidate_id' , $candidate->id)->get(); 
             }
             return response()->json([
                 'candidates' => $candidates,
+               
 
             ],200);
 
@@ -46,15 +49,33 @@ class CandidateController extends Controller
         }
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function showSpecialCandidates($category)
     {
-        //
+
+        try {
+            $candidates = collect();
+            $items = CategoryCandidate::where('category_id' , $category)->get();
+            foreach( $items as $item){
+                $candidate = Candidate::where('id' , $item['candidate_id'])->first();
+                $candidates->push($candidate);
+            }
+            foreach( $candidates as $candidate){
+                $user=User::where('userable_id' , $candidate->id)->first();
+                $candidate->token = $user->token;
+                $candidate->specialities = CategoryCandidate::where('candidate_id' , $candidate->id)->get(); 
+            }
+            return response()->json([
+                'candidates' => $candidates,
+               
+
+            ],200);
+
+        } catch (\Throwable $exception) {
+
+            return $exception->getMessage();
+        }
     }
+
 
     /**
      * Store a newly created resource in storage.
@@ -128,12 +149,15 @@ class CandidateController extends Controller
             $competences = Competence::where('candidate_id' , $candidate->id)->get();
             $languages = Language::where('candidate_id' , $candidate->id)->get();
             $qualities = Quality::where('candidate_id' , $candidate->id)->get();
+            $specialities = CategoryCandidate::where('candidate_id' , $candidate->id)->get(); 
             return response()->json([
                 'candidate' => $candidate,
                 'degrees' => $degrees,
+                'projects'=> $projects,
                 'competences' => $competences,
                 'languages' => $languages,
                 'qualities' => $qualities,
+                'specialities' => $specialities,
             ],200);
 
         } catch (\Throwable $exception) {

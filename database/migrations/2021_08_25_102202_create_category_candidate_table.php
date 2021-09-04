@@ -15,8 +15,8 @@ class CreateCategoryCandidateTable extends Migration
     {
         Schema::create('category_candidate', function (Blueprint $table) {
             $table->id();
-            $table->string('category_id');
-            $table->unsignedBigInteger('candidate_id');
+            $table->string('category_id')->nullable();
+            $table->unsignedBigInteger('candidate_id')->nullable();
             $table->timestamps();
 
 

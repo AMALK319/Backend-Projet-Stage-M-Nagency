@@ -80,8 +80,8 @@ class StoreCvRequest extends FormRequest
             'address'            =>  'required|string',
             'date_of_birth'           =>  'date',
             'nationality'           =>  'required|string',
-          /*   'specialities'            =>  'array|min:1|max:3',
-            'specialities.1.speciality' => 'required|string', */
+            'specialities'            =>  'array|min:1|max:3',
+            'specialities.0.speciality' => 'required|string',
             /* 'profiles'            =>  'array|min:1',
             'profiles.*.profile' => 'required|string', */
 

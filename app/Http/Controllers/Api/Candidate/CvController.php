@@ -133,13 +133,16 @@ class CvController extends Controller
                 ]);
             }
 
-            /* $specialities = collect($request->specialities);
+            $specialities = collect($request->specialities);
             foreach($specialities as $item){
-            $newCategoryCandidate = CategoryCandidate::create([
-                'category_id' => $item['speciality'],
-                'candidate_id' => $candidate->id,
-            ]);
-            } */
+                
+                    $newCategoryCandidate = CategoryCandidate::create([
+                        'category_id' => $item['speciality'],
+                        'candidate_id' => $candidate->id,
+                    ]);
+                
+           
+            }
             $newMotivation = Motivation::create([
                 'motivation' => $request->motivation,
                 'candidate_id' => $candidate->id,
@@ -183,14 +186,14 @@ class CvController extends Controller
       try {
 
         DB::beginTransaction();
-        $currentUser = Auth::user();
-        $candidate = Candidate::where('id' , $currentUser->userable_id)->first();
+        
+        $candidate = Candidate::where('id' , Auth::user()->userable_id)->first();
         $degrees = Degree::where('candidate_id' , $candidate->id)->get();
         $projects = AcademicProject::where('candidate_id' , $candidate->id)->get();
         $competences = Competence::where('candidate_id' , $candidate->id)->get();
         $languages = Language::where('candidate_id' , $candidate->id)->get();
         $qualities = Quality::where('candidate_id' , $candidate->id)->get();
-       /*  $specialities = CategoryCandidate::where('candidate_id' , $candidate->id)->get(); */
+        $specialities = CategoryCandidate::where('candidate_id' , $candidate->id)->get(); 
         $motivation = Motivation::where('candidate_id' , $candidate->id)->first();
         return response()->json([
             'candidate' => $candidate,
@@ -199,7 +202,7 @@ class CvController extends Controller
             'competences' => $competences,
             'languages' => $languages,
             'qualities' => $qualities,
-           /*  'specialities' => $specialities, */
+       'specialities' => $specialities, 
             'motivation' => $motivation,
         ],200);
       } catch (\Throwable $exception) {
@@ -332,11 +335,16 @@ class CvController extends Controller
 
             ]);
 
-          /*   $newCategoryCandidate = CategoryCandidate::create([
-                'category_id' => $request->speciality,
-                'candidate_id' => $candidate->id,
-            ]); */
-
+            $specialities = collect($request->specialities);
+            foreach($specialities as $item){
+              
+                    $speciality = CategoryCandidate::where('id' , $item['id'] )->update([
+                        'category_id' => $item['speciality'],
+                        'candidate_id' => $candidate->id,
+                    ]);
+                
+           
+            }
             DB::commit();
             return response()->json([
                 'candidate' => $candidate,
@@ -346,7 +354,7 @@ class CvController extends Controller
                  'languages' => $languages,
                'qualities' => $qualities, 
                'motivation' => $motivation,
-               /*  'speciality' => $speciality, */
+               'specialities' => $specialities, 
                 'message' => 'cv  updated successfully',
 
             ], 201);
