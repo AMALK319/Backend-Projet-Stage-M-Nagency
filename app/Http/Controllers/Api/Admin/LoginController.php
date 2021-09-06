@@ -1,22 +1,22 @@
 <?php
 
-namespace App\Http\Controllers\Api\Auth;
+namespace App\Http\Controllers\Api\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 
-class AuthController extends Controller
+class LoginController extends Controller
 {
 
-    public function login1(LoginRequest $request)
+    public function login(LoginRequest $request)
     {
-        if (auth()->attempt($request->validated()) ) {
+        if (auth()->attempt($request->validated()) && auth()->user()->is_admin == 1) {
             info(auth()->user()->createToken('aasasasas'));
             $accessToken = auth()->user()->createToken('aasasasas')->accessToken;
             $userResponse = User::with('userable')->where('id', auth()->id())->first();
-           
+            
             return response()->json([
                 'token' => $accessToken,
                 'space_name' => auth()->user()->userable_type == 'App\Models\Candidate' ? 'candidate' :'enterprise',

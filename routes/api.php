@@ -4,6 +4,7 @@ use App\Http\Controllers\Api\Candidate\CandidateController;
 use App\Http\Controllers\Api\Candidate\DeletePartsCvController;
 use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\Auth\AuthController;
+use App\Http\Controllers\Api\Admin\LoginController;
 use App\Http\Controllers\Api\Company\CompanyRepresentativeController;
 use App\Http\Controllers\Api\Auth\EmailVerificationController;
 use App\Http\Controllers\Api\Candidate\CvController;
@@ -70,3 +71,16 @@ Route::prefix('enterprise')->group(function () {
 
 });
 
+Route::post('/admin-login', [LoginController::class ,'login']);
+
+Route::prefix('admin')->group(function () {
+
+    Route::middleware('auth:api')->group(function () {
+        Route::get('/get-categories', [CategoryController::class ,'index']);
+        Route::get('/get-candidates', [CandidateController::class ,'index']);
+        Route::get('/get-candidates/{category}', [CandidateController::class ,'showSpecialCandidates']);
+        Route::get('/get-candidate/{token}', [CandidateController::class ,'showCandidate']);
+
+    });
+
+});

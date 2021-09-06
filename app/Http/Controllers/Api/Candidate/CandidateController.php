@@ -197,6 +197,6 @@ class CandidateController extends Controller
      */
     public function destroy($id)
     {
-        //
+        
     }
 }
