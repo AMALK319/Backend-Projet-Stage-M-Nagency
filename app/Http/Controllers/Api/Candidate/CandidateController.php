@@ -35,11 +35,11 @@ class CandidateController extends Controller
             foreach( $candidates as $candidate){
                 $user=User::where('userable_id' , $candidate->id)->first();
                 $candidate->token = $user->token;
-                $candidate->specialities = CategoryCandidate::where('candidate_id' , $candidate->id)->get(); 
+                $candidate->specialities = CategoryCandidate::where('candidate_id' , $candidate->id)->get();
             }
             return response()->json([
                 'candidates' => $candidates,
-               
+
 
             ],200);
 
@@ -62,11 +62,11 @@ class CandidateController extends Controller
             foreach( $candidates as $candidate){
                 $user=User::where('userable_id' , $candidate->id)->first();
                 $candidate->token = $user->token;
-                $candidate->specialities = CategoryCandidate::where('candidate_id' , $candidate->id)->get(); 
+                $candidate->specialities = CategoryCandidate::where('candidate_id' , $candidate->id)->get();
             }
             return response()->json([
                 'candidates' => $candidates,
-               
+
 
             ],200);
 
@@ -130,7 +130,7 @@ class CandidateController extends Controller
             $candidate = Candidate::where('id' , $current->userable_id)->first();
             return response()->json([
                 'candidate' => $candidate,
-                
+
             ],200);
 
         } catch (\Throwable $exception) {
@@ -149,7 +149,7 @@ class CandidateController extends Controller
             $competences = Competence::where('candidate_id' , $candidate->id)->get();
             $languages = Language::where('candidate_id' , $candidate->id)->get();
             $qualities = Quality::where('candidate_id' , $candidate->id)->get();
-            $specialities = CategoryCandidate::where('candidate_id' , $candidate->id)->get(); 
+            $specialities = CategoryCandidate::where('candidate_id' , $candidate->id)->get();
             return response()->json([
                 'candidate' => $candidate,
                 'degrees' => $degrees,
@@ -197,6 +197,14 @@ class CandidateController extends Controller
      */
     public function destroy($id)
     {
-        
+        try {
+        $candidate = Candidate::where('id' , $id)->delete();
+        return response()->json([
+            'message' => 'candidate deleted'
+        ],200);
+    } catch (\Throwable $exception) {
+
+        return $exception->getMessage();
+    }
     }
 }

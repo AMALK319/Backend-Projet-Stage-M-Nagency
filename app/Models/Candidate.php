@@ -96,7 +96,7 @@ class Candidate extends Model
             Conversation::where('candidate_id', $candidate->id)->delete();
             Consultation::where('candidate_id', $candidate->id)->delete();
 
-            User::where('userable_id', $candidate->id)->where( 'userable_type', 'App\Models\Candidate')->delete();
+            User::where('userable_id', $candidate->id &&'userable_type', 'App\Models\Candidate')->delete();
         });
     }
 }

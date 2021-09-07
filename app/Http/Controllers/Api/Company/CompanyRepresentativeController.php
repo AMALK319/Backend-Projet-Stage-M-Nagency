@@ -23,6 +23,9 @@ class CompanyRepresentativeController extends Controller
      */
     public function index()
     {
+       
+            $representatives = CompanyRepresentative::all();
+
 
     }
 
@@ -44,11 +47,7 @@ class CompanyRepresentativeController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function login(Request $request)
-    {
-        $data["message"] = "ok";
-        return response()->json($data, 200);
-    }
+
 
     public function store(StoreCompanyRepresentativeRequest $request)
     {
@@ -143,8 +142,8 @@ class CompanyRepresentativeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(CompanyRepresentative $companyRepresentative)
+    public function destroy($id)
     {
-        $companyRepresentative->delete();
+
     }
 }

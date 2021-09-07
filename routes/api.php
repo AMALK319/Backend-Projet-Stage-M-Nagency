@@ -42,7 +42,7 @@ Route::post('/email_verification/{token}', [EmailVerificationController::class ,
 Route::prefix('candidate')->group(function () {
 
     Route::middleware('auth:api')->group(function () {
-     
+
         Route::post('/store-cv', [CvController::class ,'store']);
         Route::get('/show-cv', [CvController::class ,'show']);
         Route::post('/update-cv', [CvController::class ,'update']);
@@ -55,7 +55,7 @@ Route::prefix('candidate')->group(function () {
         Route::get('/get-candidate', [CandidateController::class ,'show']);
         Route::get('/user-logout', [AuthController::class ,'logout']);
 
-       
+
 
     });
 });
@@ -80,6 +80,10 @@ Route::prefix('admin')->group(function () {
         Route::get('/get-candidates', [CandidateController::class ,'index']);
         Route::get('/get-candidates/{category}', [CandidateController::class ,'showSpecialCandidates']);
         Route::get('/get-candidate/{token}', [CandidateController::class ,'showCandidate']);
+        Route::get('/delete-candidate/{id}', [CandidateController::class ,'destroy']);
+
+        Route::get('/get-representatives', [CompanyRepresentativeController::class ,'index']);
+
 
     });
 
