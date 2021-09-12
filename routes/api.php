@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\Auth\AuthController;
 use App\Http\Controllers\Api\Admin\LoginController;
 use App\Http\Controllers\Api\Company\CompanyRepresentativeController;
+use App\Http\Controllers\Api\Company\Conversations\ConversationController;
 use App\Http\Controllers\Api\Auth\EmailVerificationController;
 use App\Http\Controllers\Api\Candidate\CvController;
 use Illuminate\Http\Request;
@@ -66,6 +67,9 @@ Route::prefix('enterprise')->group(function () {
         Route::get('/get-candidates', [CandidateController::class ,'index']);
         Route::get('/get-candidates/{category}', [CandidateController::class ,'showSpecialCandidates']);
         Route::get('/get-candidate/{token}', [CandidateController::class ,'showCandidate']);
+        Route::get('/get-conversations', [ConversationController::class ,'index']);
+        Route::get('/get-conversation/{token}', [ConversationController::class ,'show']);
+        Route::post('/store-message/{token}', [ConversationController::class ,'store']);
 
     });
 

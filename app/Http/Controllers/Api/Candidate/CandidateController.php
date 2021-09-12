@@ -30,12 +30,13 @@ class CandidateController extends Controller
     {
 
         try {
-            $candidates = Candidate::all();
+            $candidates = Candidate::where('cv_created' , 1)->get();
 
-            foreach( $candidates as $candidate){
+            foreach( $candidates as  $candidate){
+                
                 $user=User::where('userable_id' , $candidate->id)->first();
                 $candidate->token = $user->token;
-                $candidate->specialities = CategoryCandidate::where('candidate_id' , $candidate->id)->get();
+                $candidate->speciality = CategoryCandidate::where('candidate_id' , $candidate->id)->first();
             }
             return response()->json([
                 'candidates' => $candidates,
@@ -62,7 +63,8 @@ class CandidateController extends Controller
             foreach( $candidates as $candidate){
                 $user=User::where('userable_id' , $candidate->id)->first();
                 $candidate->token = $user->token;
-                $candidate->specialities = CategoryCandidate::where('candidate_id' , $candidate->id)->get();
+                
+                $candidate->speciality = CategoryCandidate::where('candidate_id' , $candidate->id)->first();
             }
             return response()->json([
                 'candidates' => $candidates,

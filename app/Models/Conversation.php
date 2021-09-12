@@ -9,6 +9,11 @@ class Conversation extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+       'is_choosed',
+       'candidate_id',
+       'representative_id',
+    ];
 
     public function Messages()
     {

@@ -11,6 +11,10 @@ class Message extends Model
 
     protected $fillable = [
         'message',
+        'conversation_id',
+        'from_id',
+        'to_id',
+        'readed_at'
     ];
 
 

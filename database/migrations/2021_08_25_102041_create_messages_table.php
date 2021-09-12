@@ -15,11 +15,10 @@ class CreateMessagesTable extends Migration
     {
         Schema::create('messages', function (Blueprint $table) {
             $table->id();
-            $table->text('message');
-            $table->enum('sender', ['candidate_id', 'representative_id'])->default('representative_id');
+            $table->text('message')->nullable();
             $table->unsignedBigInteger('conversation_id');
-            $table->unsignedBigInteger('candidate_id');
-            $table->unsignedBigInteger('representative_id');
+            $table->unsignedBigInteger('from_id');
+            $table->unsignedBigInteger('to_id');
 
             $table->timestamps();
 
