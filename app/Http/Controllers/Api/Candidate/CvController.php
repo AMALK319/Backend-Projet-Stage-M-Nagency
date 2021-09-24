@@ -20,31 +20,11 @@ use App\Http\Requests\Candidate\StoreCvRequest;
 
 class CvController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
+   
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * Store a newly cv of the connected candidate.
+    
      */
     public function store(StoreCvRequest $request)
     {
@@ -78,40 +58,40 @@ class CvController extends Controller
                     'candidate_id' => $candidate->id,
                 ]);
             }
-/*
+
             $experiences = collect($request->experiences);
             foreach($experiences as $item){
-            $newProfessionalExperience = ProfessionalExperience::create([
-            'experience_title' => $item->experience_title,
-            'enterprise_name' => $item->enterprise_name,
-            'enterprise_city' => $item->enterprise_city,
-            'enterprise_address' => $item->enterprise_address,
-            'experience_start_date' => $item->experience_start_date,
-            'experience_end_date' => $item->experience_end_date,
-            'experience_description' => $item->experience_description,
+                $newProfessionalExperience = ProfessionalExperience::create([
+                    'experience_title' => $item['experience_title'],
+                    'enterprise_name' => $item['enterprise_name'],
+                    'enterprise_city' => $item['enterprise_city'],
+                    'enterprise_address' => $item['enterprise_address'],
+                    'experience_start_date' => $item['experience_start_date'],
+                    'experience_end_date' => $item['experience_end_date'],
+                    'experience_description' => $item['experience_description'],
 
             ]);
             }
 
             $certifications = collect($request->certifications);
             foreach($certifications as $item){
-            $newCertification = Certification::create([
-            'certification_name' => $item->certification_name,
-            'issuing_agency' => $item->issuing_agency,
-            'issue_date' => $item->issue_date,
-            'expiration_date' => $item->expiration_date,
-            'degree_id' => $item->degree_id,
-            'degree_url' => $item->degree_url,
+                $newCertification = Certification::create([
+                    'certification_name' => $item['certification_name'],
+                    'issuing_agency' => $item['issuing_agency'],
+                    'issue_date' => $item['issue_date'],
+                    'expiration_date' => $item['expiration_date'],
+                    'degree_id' => $item['degree_id'],
+                    'degree_url' => $item['degree_url'],
 
             ]);
-           } */
+           } 
            $competences = collect($request->competences);
            foreach ( $competences as $item){
-               $newCompetence = Competence::create([
-                'competence' => $item['competence'],
-                'competence_description' => $item['competence_description'],
-                'candidate_id' => $candidate->id,
-               ]);
+                $newCompetence = Competence::create([
+                    'competence' => $item['competence'],
+                    'competence_description' => $item['competence_description'],
+                    'candidate_id' => $candidate->id,
+            ]);
            }
 
 
@@ -176,10 +156,7 @@ class CvController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * show cv
      */
     public function show(Candidate $candidate)
     {
@@ -190,6 +167,8 @@ class CvController extends Controller
         $candidate = Candidate::where('id' , Auth::user()->userable_id)->first();
         $degrees = Degree::where('candidate_id' , $candidate->id)->get();
         $projects = AcademicProject::where('candidate_id' , $candidate->id)->get();
+        $experiences = ProfessionalExperience::where('candidate_id' , $candidate->id)->get();
+        $certifications = Certification::where('candidate_id' , $candidate->id)->get();
         $competences = Competence::where('candidate_id' , $candidate->id)->get();
         $languages = Language::where('candidate_id' , $candidate->id)->get();
         $qualities = Quality::where('candidate_id' , $candidate->id)->get();
@@ -199,10 +178,12 @@ class CvController extends Controller
             'candidate' => $candidate,
             'degrees' => $degrees,
             'projects' => $projects,
+            'certifications' => $certifications,
+            'experiences' => $experiences,
             'competences' => $competences,
             'languages' => $languages,
             'qualities' => $qualities,
-       'specialities' => $specialities,
+            'specialities' => $specialities,
             'motivation' => $motivation,
         ],200);
       } catch (\Throwable $exception) {
@@ -212,24 +193,7 @@ class CvController extends Controller
 
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+   /* update cv */
     public function update(StoreCvRequest $request)
     {
         try {
@@ -255,6 +219,7 @@ class CvController extends Controller
 
             $projects = collect($request->projects);
             foreach ( $projects as $item){
+
                 $AcademicProject = AcademicProject::where('id' , $item['id'] )->update([
                     'project_title' => $item['project_title'],
                     'project_description' => $item['project_description'],
@@ -264,33 +229,34 @@ class CvController extends Controller
                     'candidate_id' => $candidate->id,
                 ]);
             }
-/*
+
             $experiences = collect($request->experiences);
             foreach($experiences as $item){
-            $newProfessionalExperience = ProfessionalExperience::create([
-            'experience_title' => $item->experience_title,
-            'enterprise_name' => $item->enterprise_name,
-            'enterprise_city' => $item->enterprise_city,
-            'enterprise_address' => $item->enterprise_address,
-            'experience_start_date' => $item->experience_start_date,
-            'experience_end_date' => $item->experience_end_date,
-            'experience_description' => $item->experience_description,
+            
+                $ProfessionalExperience = ProfessionalExperience::where('id' , $item['id'] )->update([
+                    'experience_title' => $item['experience_title'],
+                    'enterprise_name' => $item['enterprise_name'],
+                    'enterprise_city' => $item['enterprise_city'],
+                    'enterprise_address' => $item['enterprise_address'],
+                    'experience_start_date' => $item['experience_start_date'],
+                    'experience_end_date' => $item['experience_end_date'],
+                    'experience_description' => $item['experience_description'],
 
-            ]);
+                ]);
             }
 
             $certifications = collect($request->certifications);
             foreach($certifications as $item){
-            $newCertification = Certification::create([
-            'certification_name' => $item->certification_name,
-            'issuing_agency' => $item->issuing_agency,
-            'issue_date' => $item->issue_date,
-            'expiration_date' => $item->expiration_date,
-            'degree_id' => $item->degree_id,
-            'degree_url' => $item->degree_url,
+                $Certification = Certification::where('id' , $item['id'] )->update([
+                    'certification_name' => $item['certification_name'],
+                    'issuing_agency' => $item['issuing_agency'],
+                    'issue_date' => $item['issue_date'],
+                    'expiration_date' => $item['expiration_date'],
+                    'degree_id' => $item['degree_id'],
+                    'degree_url' => $item['degree_url'],
 
             ]);
-           }*/
+           }
            $competences = collect($request->competences);
            foreach ( $competences as $item){
                $Competence = Competence::where('id' , $item['id'] )->update([
@@ -350,12 +316,14 @@ class CvController extends Controller
             return response()->json([
                 'candidate' => $candidate,
                 'degrees' => $degrees,
-                 'projects' => $projects,
-              'competences' => $competences,
-                 'languages' => $languages,
-               'qualities' => $qualities,
-               'motivation' => $motivation,
-               'specialities' => $specialities,
+                'projects' => $projects,
+                'certifications' => $certifications,
+                'experiences' => $experiences,
+                'competences' => $competences,
+                'languages' => $languages,
+                'qualities' => $qualities,
+                'motivation' => $motivation,
+                'specialities' => $specialities,
                 'message' => 'cv  updated successfully',
 
             ], 201);
@@ -365,52 +333,6 @@ class CvController extends Controller
         }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy()
-    {
-        try {
-
-            DB::beginTransaction();
-            $candidate = Candidate::where('id' , Auth::user()->userable_id)->first();
-
-            $degrees = Degree::where('candidate_id' , $candidate->id)->get();
-            foreach($degrees as $degree){
-                $degree->delete();
-            }
-
-
-            return $degrees;
-            // $projects = AcademicProject::where('candidate_id' , $candidate->id)->delete();
-            // $competences = Competence::where('candidate_id' , $candidate->id)->delete();
-            // $languages = Language::where('candidate_id' , $candidate->id)->delete();
-            // $qualities = Quality::where('candidate_id' , $candidate->id)->delete();
-            // $motivation= Motivation::where('candidate_id' , $candidate->id)->delete();
-            // $speciality = CategoryCandidate::where('candidate_id' , $candidate->id)->delete();
-
-            DB::table('candidates')->where('id',  $candidate->id )->update([
-                'email'                 => null ,
-                'gender'                => null ,
-                'address'            => null  ,
-                'date_of_birth'           => null ,
-
-            ]);
-
-            return response()->json([
-                'candidate' => $candidate,
-                'degrees' => $degrees,
-                'competences' => $competences,
-                'languages' => $languages,
-                'qualities' => $qualities,
-              /*   'speciality' => $speciality, */
-            ],200);
-          } catch (\Throwable $exception) {
-            DB::rollBack();
-            return $exception->getMessage();
-          }
-    }
+    
+    
 }

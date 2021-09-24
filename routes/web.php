@@ -22,20 +22,8 @@ use Illuminate\Support\Facades\Route;
 Route::get('/email-verification', function () {
     return view('email_verification');
 });
-/* Route::get('/cv', function () {
-    return view('cv');
-});
- */
-
-Route::get('/cv', [GetCvController::class ,'getCvPdf']);
 
 
-/* Route::get('/email-test', function () {
-    Mail::to('amalkalim@gmail.com')->send(new EmailVerification);
-}); */
 
 
-/* Route::get('/test-delete', function () {
- return Candidate::first()->delete();
-    return CompanyRepresentative::first()->delete();
-}); */
+

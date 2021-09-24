@@ -42,22 +42,22 @@ class StoreCvRequest extends FormRequest
             'projects.*.project_start_date' => 'required|date',
             'projects.*.project_end_date' => 'required|date',
    /*   Professional Experience */
-         /*    'experiences' => 'required|array|min:1',
+            'experiences' => 'array|min:1',
             'experiences.*.experience_title' => 'required|string',
             'experiences.*.enterprise_name' => 'required|string',
             'experiences.*.enterprise_city' => 'string',
             'experiences.*.enterprise_address' => 'string',
-            'experiences.*.experience_start_date' => 'required|date',
-            'experiences.*.experience_end_date' => 'required|date',
-            'experiences.*.experience_description' => 'string', */
+            'experiences.*.experience_start_date' => 'required|date|before:experiences.*.experience_end_date',
+            'experiences.*.experience_end_date' => 'required|date|after:experiences.*.experience_start_date',
+            'experiences.*.experience_description' => 'string',
  /*   Certifications */
-           /*  'certifications' => 'required|array|min:1',
+            'certifications' => 'array|min:1',
             'certifications.*.certification_name' => 'required|string',
             'certifications.*.issuing_agency' => 'required|string',
-            'certifications.*.issue_date' => 'required|date',
-            'certifications.*.expiration_date' => 'date',
+            'certifications.*.issue_date' => 'required|date|before:certifications.*.expiration_date',
+            'certifications.*.expiration_date' => 'date|after:certifications.*.issue_date',
             'certifications.*.degree_id' => 'required|string',
-            'certifications.*.degree_url' => 'required|string', */
+            'certifications.*.degree_url' => 'required|string',
      /* Competences */
             'competences' => 'array|min:1',
             'competences.*.competence' => 'required|string',

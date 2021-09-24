@@ -24,21 +24,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/info', [CompanyRepresentativeController::class, 'test']);
 
-Route::post('/candidate-register', [CandidateController::class, 'store'])->name('candidate.store');
-Route::post('/company-representative-login', [CompanyRepresentativeController::class, 'login'])->name('candidate.login');
-Route::post('/company-representative-register', [CompanyRepresentativeController::class, 'store']);
-Route::post('/user-login1', [AuthController::class ,'login1'])->middleware('is_verified');
-Route::post('/email_verification/{token}', [EmailVerificationController::class , 'verify']);
-
-
-
-
-
-// Route::post('/create-cv-step3', [CvWorkExperienceController::class ,'store']);
-// Route::post('/create-cv-step4', [CvSkillsController::class ,'store']);
-/* Route::post('/store-cv', [CvController::class ,'store'])->middleware('auth:api'); */
 
 Route::prefix('candidate')->group(function () {
 
@@ -50,6 +36,8 @@ Route::prefix('candidate')->group(function () {
         Route::delete('/delete-cv', [CvController::class ,'destroy']);
         Route::post('/delete-degree', [DeletePartsCvController::class ,'destroyDegree']);
         Route::post('/delete-project', [DeletePartsCvController::class ,'destroyProject']);
+        Route::post('/delete-experience', [DeletePartsCvController::class ,'destroyExperience']);
+        Route::post('/delete-certification', [DeletePartsCvController::class ,'destroyCertification']);
         Route::post('/delete-competence', [DeletePartsCvController::class ,'destroyCompetence']);
         Route::post('/delete-language', [DeletePartsCvController::class ,'destroyLanguage']);
         Route::post('/delete-quality', [DeletePartsCvController::class ,'destroyQuality']);
@@ -92,3 +80,11 @@ Route::prefix('admin')->group(function () {
     });
 
 });
+
+
+
+Route::post('/candidate-register', [CandidateController::class, 'store'])->name('candidate.store');
+/* Route::post('/company-representative-login', [CompanyRepresentativeController::class, 'login'])->name('candidate.login'); */
+Route::post('/company-representative-register', [CompanyRepresentativeController::class, 'store']);
+Route::post('/user-login1', [AuthController::class ,'login1'])->middleware('is_verified');
+Route::post('/email_verification/{token}', [EmailVerificationController::class , 'verify']);

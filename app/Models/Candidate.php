@@ -83,10 +83,10 @@ class Candidate extends Model
     {
         parent::boot();
 
-        static::deleting(function ($candidate) {
+        static::deleting(function ($id) {
 
-            AcademicProject::where('candidate_id', $candidate->id)->delete();
-            Competence::where('candidate_id', $candidate->id)->delete();
+            AcademicProject::where('candidate_id', $id)->delete();
+           /*  Competence::where('candidate_id', $candidate->id)->delete();
             Certification::where('candidate_id', $candidate->id)->delete();
             Degree::where('candidate_id', $candidate->id)->delete();
             Language::where('candidate_id', $candidate->id)->delete();
@@ -95,9 +95,9 @@ class Candidate extends Model
             Quality::where('candidate_id', $candidate->id)->delete();
 
             Conversation::where('candidate_id', $candidate->id)->delete();
-            Consultation::where('candidate_id', $candidate->id)->delete();
+            Consultation::where('candidate_id', $candidate->id)->delete(); */
 
-            User::where('userable_id', $candidate->id && 'userable_type', 'App\Models\Candidate')->delete();
+            User::where('userable_id', $id && 'userable_type', 'App\Models\Candidate')->delete();
         });
     }
 }

@@ -20,15 +20,19 @@ use App\Http\Requests\Candidate\StoreCvRequest;
 
 class DeletePartsCvController extends Controller
 {
+   
+    public  $candidate;
+    public function __construct() { 
+         this.candidate == candidate::where('id' , Auth::user()->userable_id)->first();
+    }
+
    //supprimer une formation du cv
     public function destroyDegree(Request $request)
     {
         try { 
         $degree = Degree::where('id' , $request->id)->delete();
-        $candidate = Candidate::where('id' , Auth::user()->userable_id)->first();
         $degrees = Degree::where('candidate_id' , $candidate->id)->get(); 
         return response()->json([
-            'degrees' => $degrees,
             'message' => 'degree  deleted successfully',
         ], 200);
         } 
@@ -42,10 +46,8 @@ class DeletePartsCvController extends Controller
         try { 
          
         $project = AcademicProject::where('id' , $request->id)->delete();
-        $candidate = Candidate::where('id' , Auth::user()->userable_id)->first();
         $projects = AcademicProject::where('candidate_id' , $candidate->id)->get(); 
         return response()->json([
-            'projects' => $projects,
             'message' => 'project  deleted successfully',
         ], 200);
         } 
@@ -53,15 +55,43 @@ class DeletePartsCvController extends Controller
             return $exception->getMessage();
         }
     }
-//supprimer une compétence du cv
+     //supprimer une experience du cv 
+     public function destroyExperience(Request $request)
+     {
+         try { 
+          
+         $experience = ProfessionalExperience::where('id' , $request->id)->delete();
+         $experiences = ProfessionalExperience::where('candidate_id' , $candidate->id)->get(); 
+         return response()->json([     
+             'message' => 'experience  deleted successfully',
+         ], 200);
+         } 
+         catch (\Throwable $exception) {
+             return $exception->getMessage();
+         }
+     }
+      //supprimer une certification du cv 
+    public function destroyCertification(Request $request)
+    {
+        try { 
+         
+        $certification = Certification::where('id' , $request->id)->delete();
+        $certifications = Certification::where('candidate_id' , $candidate->id)->get(); 
+        return response()->json([
+            'message' => 'certification  deleted successfully',
+        ], 200);
+        } 
+        catch (\Throwable $exception) {
+            return $exception->getMessage();
+        }
+    }
+    //supprimer une compétence du cv
     public function destroyCompetence(Request $request)
     {
         try { 
         $competence = Competence::where('id' , $request->id)->delete();
-        $candidate = Candidate::where('id' , Auth::user()->userable_id)->first();
         $competences = Competence::where('candidate_id' , $candidate->id)->get(); 
         return response()->json([
-            'competences' => $competences,
             'message' => 'competence  deleted successfully',
         ], 200);
         } 
@@ -69,15 +99,13 @@ class DeletePartsCvController extends Controller
             return $exception->getMessage();
         }
     }
-//supprimer une langue du cv
+    //supprimer une langue du cv
     public function destroyLanguage(Request $request)
     {
         try { 
         $language = Language::where('id' , $request->id)->delete();
-        $candidate = Candidate::where('id' , Auth::user()->userable_id)->first();
         $languages = Language::where('candidate_id' , $candidate->id)->get(); 
         return response()->json([
-            'languages' => $languages,
             'message' => 'language  deleted successfully',
         ], 200);
         } 
@@ -90,10 +118,8 @@ class DeletePartsCvController extends Controller
     {
         try { 
         $quality = Quality::where('id' , $request->id)->delete();
-        $candidate = Candidate::where('id' , Auth::user()->userable_id)->first();
         $qualities = Quality::where('candidate_id' , $candidate->id)->get(); 
         return response()->json([
-            'qualities' => $qualities,
             'message' => 'quality  deleted successfully',
         ], 200);
         } 
