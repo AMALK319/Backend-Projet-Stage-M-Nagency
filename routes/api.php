@@ -10,7 +10,10 @@ use App\Http\Controllers\Api\Company\Conversations\ConversationController;
 use App\Http\Controllers\Api\Auth\EmailVerificationController;
 use App\Http\Controllers\Api\Candidate\CvController;
 use Illuminate\Http\Request;
+
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Mail;
+
 
 
 /*
@@ -58,6 +61,7 @@ Route::prefix('enterprise')->group(function () {
         Route::get('/get-conversations', [ConversationController::class ,'index']);
         Route::get('/get-conversation/{token}', [ConversationController::class ,'show']);
         Route::post('/store-message/{token}', [ConversationController::class ,'store']);
+        Route::get('/user-logout', [AuthController::class ,'logout']);
 
     });
 

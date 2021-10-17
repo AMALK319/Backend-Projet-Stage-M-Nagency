@@ -7,6 +7,9 @@ use App\Models\Candidate;
 use App\Models\CompanyRepresentative;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Config;
+use App\Models\User;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -24,6 +27,10 @@ Route::get('/email-verification', function () {
 });
 
 
-
+Route::get('/dd', function(){
+    $newUser = User::first();
+    Mail::to('amalkalim@gmail.com')->send(new EmailVerification($newUser));
+    return ;
+ });
 
 

@@ -67,6 +67,8 @@ class CompanyRepresentativeController extends Controller
                 'password'          =>  bcrypt($request->password),
                 'userable_type'     =>  'App\Models\CompanyRepresentative',
                 'userable_id'       =>  $newCompanyRepresentative->id,
+                'status' => 1,
+                'email_verified_at' => now(),
             ]);
 
             $token = $newUser->createToken('API Token')->accessToken;
@@ -78,9 +80,10 @@ class CompanyRepresentativeController extends Controller
                 'company_address' => $request->company_address,
                 'company_name' =>  $request->company_name,
                 'representative_id' => $newCompanyRepresentative->id,
+                
             ]);
 
-            Mail::to($request->get('email'))->send(new EmailVerification($newUser));
+            /* Mail::to($request->get('email'))->send(new EmailVerification($newUser)); */
 
             DB::commit();
             return response()->json([

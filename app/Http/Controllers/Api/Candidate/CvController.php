@@ -69,6 +69,8 @@ class CvController extends Controller
                     'experience_start_date' => $item['experience_start_date'],
                     'experience_end_date' => $item['experience_end_date'],
                     'experience_description' => $item['experience_description'],
+                    'candidate_id' => $candidate->id,
+
 
             ]);
             }
@@ -82,6 +84,8 @@ class CvController extends Controller
                     'expiration_date' => $item['expiration_date'],
                     'degree_id' => $item['degree_id'],
                     'degree_url' => $item['degree_url'],
+                    'candidate_id' => $candidate->id,
+
 
             ]);
            } 

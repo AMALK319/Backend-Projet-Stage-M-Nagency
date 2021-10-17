@@ -3,6 +3,8 @@
 namespace App\Http\Requests\Candidate;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rules\Password;
+
 
 class StoreCandidateRequest extends FormRequest
 {
@@ -27,7 +29,13 @@ class StoreCandidateRequest extends FormRequest
             'last_name'              =>  'required|string',
             'first_name'             =>  'required|string',
             'email'                 =>  'required|email|unique:users',
-            'password'              =>  'required|confirmed',
+            'password'              => ['required', 'confirmed', Password::min(8)
+                                       ->mixedCase()
+                                       ->letters()
+                                       ->numbers()
+                                       ->symbols()
+
+            ],
             'password_confirmation' => 'required|same:password',
            /*  'gender'                =>  'required|in:Mr,Mme', */
             'mobile_number'          =>  'required|string',

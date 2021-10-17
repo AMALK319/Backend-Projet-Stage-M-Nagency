@@ -22,7 +22,7 @@ class CreateCandidatesTable extends Migration
             $table->string('mobile_number')->nullable();
             $table->date('date_of_birth')->nullable();
             $table->string('address')->nullable();
-            $table->string('profile')->nullable();
+            $table->string('photo_path')->nullable();
             $table->string('nationality')->nullable();
             $table->timestamps();
         });

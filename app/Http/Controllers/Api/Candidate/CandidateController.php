@@ -101,10 +101,12 @@ class CandidateController extends Controller
                 'password'          =>  bcrypt($request->password),
                 'userable_type'     =>  Candidate::class,
                 'userable_id'       => $newCandidate->id,
+                'status' => 1,
+                'email_verified_at' => now(),
             ]);
             $token = $newUser->createToken('API Token')->accessToken;
 
-            Mail::to($request->get('email'))->send(new EmailVerification($newUser));
+            //Mail::to($request->get('email'))->send(new EmailVerification($newUser));
 
             DB::commit();
             return response()->json([
@@ -200,7 +202,7 @@ class CandidateController extends Controller
     public function destroy($id)
     {
         try {
-        $candidate = Candidate::where('id' , $id)->delete();
+        $candidate = Candidate::destroy($id);
         return response()->json([
             'message' => 'candidate deleted'
         ],200);

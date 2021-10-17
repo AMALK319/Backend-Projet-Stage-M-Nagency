@@ -17,10 +17,11 @@ class Candidate extends Model
         'mobile_number',
         'date_of_birth',
         'nationality',
-        'profile',
+        'photo_path',
         'address',
         'token',
         'cv_created',
+     
     ];
 
     public function user()
@@ -83,7 +84,7 @@ class Candidate extends Model
     {
         parent::boot();
 
-        static::deleting(function ($id) {
+       static::deleting(function ($id) {
 
             AcademicProject::where('candidate_id', $id)->delete();
            /*  Competence::where('candidate_id', $candidate->id)->delete();
@@ -93,7 +94,6 @@ class Candidate extends Model
             Motivation::where('candidate_id', $candidate->id)->delete();
             ProfessionalExperience::where('candidate_id', $candidate->id)->delete();
             Quality::where('candidate_id', $candidate->id)->delete();
-
             Conversation::where('candidate_id', $candidate->id)->delete();
             Consultation::where('candidate_id', $candidate->id)->delete(); */
 

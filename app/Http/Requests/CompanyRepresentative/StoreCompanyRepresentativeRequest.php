@@ -30,13 +30,13 @@ class StoreCompanyRepresentativeRequest extends FormRequest
 
             'mobile_number' => 'string|required',
             'email'                 =>  'required|email|unique:users',
-           /*  'password'              => ['required', 'confirmed', Password::min(8)
+            'password'              => ['required', 'confirmed', Password::min(8)
                                        ->mixedCase()
                                        ->letters()
                                        ->numbers()
                                        ->symbols()
 
-            ], */
+            ],
             'password'              =>  'required|confirmed',
             'password_confirmation' => 'required|same:password',
             'company_name' => 'string',
